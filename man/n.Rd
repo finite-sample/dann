@@ -13,4 +13,4 @@ n
 \description{
 Sample size parameter
 }
-\keyword{data}
+\keyword{internal}

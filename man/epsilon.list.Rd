@@ -13,4 +13,4 @@ epsilon.list
 \description{
 Epsilon values for DANN
 }
-\keyword{data}
+\keyword{internal}
