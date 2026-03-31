@@ -52,6 +52,10 @@ dannsubauto(
 
   Boolean
 
+- ...:
+
+  Additional arguments passed to underlying functions
+
 ## Value
 
 A list with items including Name of the Application, No. of pages

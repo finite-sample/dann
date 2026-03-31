@@ -9,13 +9,15 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/soodoku/dann/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/finite-sample/dann/blob/master/inst/CITATION)
 
-Trevor Hastie (). dann: Discriminant Adaptive Nearest Neighbor
-Classification.R package version 0.1.1.
+Hastie T (????). *dann: Discriminant Adaptive Nearest Neighbor
+Classification*. R package version 1.0.3,
+<https://github.com/finite-sample/dann>.
 
     @Manual{,
       title = {dann: Discriminant Adaptive Nearest Neighbor Classification},
       author = {Trevor Hastie},
-      note = {R package version 0.1.1},
+      note = {R package version 1.0.3},
+      url = {https://github.com/finite-sample/dann},
     }

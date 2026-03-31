@@ -47,6 +47,10 @@ mydann(
 
   iteration
 
+- ...:
+
+  Additional arguments passed to dann2
+
 ## Value
 
 results
