@@ -1,0 +1,149 @@
+# dann
+
+Trevor Hastie’s Original Fortran Implementation of Discriminant Adaptive
+Nearest Neighbors
+
+## What is DANN?
+
+Discriminant Adaptive Nearest Neighbor (DANN) classification improves on
+standard k-nearest neighbors by adapting the distance metric locally.
+Instead of using Euclidean distance (which treats all directions
+equally), DANN:
+
+1.  Computes a local discriminant analysis around each query point
+2.  Stretches the neighborhood along class boundaries
+3.  Shrinks it in the direction orthogonal to boundaries
+
+This makes DANN particularly effective when classes have different
+covariance structures or when irrelevant features are present.
+
+## Why This Package?
+
+This package preserves **Trevor Hastie’s original Fortran
+implementation** of DANN, converted from Ratfor. The Fortran backend
+provides computational efficiency for the core algorithm.
+
+**Note**: A different `dann` package exists on CRAN (by gmcmacran),
+which is an R/C++ reimplementation based on a Python port. This package
+uses Hastie’s original code.
+
+## Installation
+
+``` r
+# install.packages("devtools")
+devtools::install_github("soodoku/dann")
+```
+
+## Quick Example
+
+``` r
+library(dann)
+
+# Load included glass dataset
+data(dannt)
+
+# Standardize training and test data
+std <- stand(glass.train$x, glass.test$x)
+
+# Standard k-NN
+knn_pred <- knn(std$x, std$xx, glass.train$y, k = 5)
+knn_acc <- mean(knn_pred == glass.test$y)
+
+# DANN
+dann_pred <- dann(std$x, std$xx, glass.train$y, k = 5, kmetric = 50)
+dann_acc <- mean(dann_pred == glass.test$y)
+
+cat("5-NN accuracy:", round(knn_acc, 3), "\n")
+cat("DANN accuracy:", round(dann_acc, 3), "\n")
+```
+
+## Key Parameters
+
+| Parameter | Description                                        | Default |
+|-----------|----------------------------------------------------|---------|
+| `k`       | Number of neighbors for final classification       | 5       |
+| `kmetric` | Number of neighbors for computing the local metric | 50      |
+| `epsilon` | Softening parameter (larger = more regularization) | 1       |
+| `fullw`   | Use full (non-diagonal) covariance matrix          | FALSE   |
+| `scalar`  | Use scalar (isotropic) covariance                  | FALSE   |
+
+## Authors
+
+- **Trevor Hastie** - Original algorithm and Fortran implementation
+- **Gaurav Sood** - R interface, packaging, and maintenance
+
+## License
+
+MIT
+
+## References
+
+Hastie, T., & Tibshirani, R. (1996). Discriminant Adaptive Nearest
+Neighbor Classification. *IEEE Transactions on Pattern Analysis and
+Machine Intelligence*, 18(6), 607-616.
+[PDF](https://web.stanford.edu/~hastie/Papers/dann_IEEE.pdf)
+
+# Package index
+
+## Classification
+
+Main classification functions
+
+- [`dann()`](https://soodoku.github.io/dann/reference/dann.md) : dann
+- [`dann2()`](https://soodoku.github.io/dann/reference/dann2.md) : dann2
+- [`knn()`](https://soodoku.github.io/dann/reference/knn.md) : knn
+- [`knncv()`](https://soodoku.github.io/dann/reference/knncv.md) : knncv
+
+## Subspace Methods
+
+Subspace-based DANN variants
+
+- [`dannsub()`](https://soodoku.github.io/dann/reference/dannsub.md) :
+  dannsub
+- [`dannsubauto()`](https://soodoku.github.io/dann/reference/dannsubauto.md)
+  : dannsubauto
+- [`nnsubspace()`](https://soodoku.github.io/dann/reference/nnsubspace.md)
+  : nnsubspace
+- [`nnsubmeans`](https://soodoku.github.io/dann/reference/nnsubmeans.md)
+  : nnsubmeans
+
+## Utilities
+
+Helper functions
+
+- [`stand()`](https://soodoku.github.io/dann/reference/stand.md) : stand
+- [`nndist()`](https://soodoku.github.io/dann/reference/nndist.md) :
+  nndist
+- [`nndist2`](https://soodoku.github.io/dann/reference/nndist2.md) :
+  nndist2
+- [`mydann()`](https://soodoku.github.io/dann/reference/mydann.md) :
+  mydann
+
+## Datasets
+
+Example datasets
+
+- [`Sonar`](https://soodoku.github.io/dann/reference/Sonar.md) : Sonar
+  data
+- [`Vowel`](https://soodoku.github.io/dann/reference/Vowel.md) : Vowel
+  data
+- [`glass.test`](https://soodoku.github.io/dann/reference/glass.test.md)
+  : Test data for glass
+- [`glass.train`](https://soodoku.github.io/dann/reference/glass.train.md)
+  : Training data for glass
+- [`min2d()`](https://soodoku.github.io/dann/reference/min2d.md) : min2d
+- [`sphdata.4`](https://soodoku.github.io/dann/reference/sphdata.4.md) :
+  Sph Data
+
+## Package
+
+- [`dann-package`](https://soodoku.github.io/dann/reference/dann-package.md)
+  : dann: Discriminant Adaptive Nearest Neighbors
+
+# Articles
+
+### All vignettes
+
+- [Comparing kNN and
+  DANN](https://soodoku.github.io/dann/articles/dann-comparison.md):
+- [DANN Examples](https://soodoku.github.io/dann/articles/dannex.md):
