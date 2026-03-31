@@ -11,6 +11,11 @@
 #' @examples stand(matrix(1:6, ncol=3), matrix(1:6, ncol=3))
 
 stand <- function(x, xx) {
+  x <- as.matrix(x)
+  xx <- as.matrix(xx)
+  assertMatrix(x, mode = "numeric", any.missing = FALSE, min.rows = 1)
+  assertMatrix(xx, mode = "numeric", any.missing = FALSE, ncols = ncol(x))
+
   mm <- apply(x, 2, mean)
   dd <- sqrt(apply(x, 2, var))
   x <- scale(x, center = mm, scale = dd)

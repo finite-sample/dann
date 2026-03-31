@@ -20,16 +20,19 @@ knn <- function(train, test, cl, k = 1) {
   train <- as.matrix(train)
   test <- as.matrix(test)
 
+  assertMatrix(train, mode = "numeric", any.missing = FALSE, min.rows = 1)
+  assertMatrix(test, mode = "numeric", any.missing = FALSE, min.rows = 1, ncols = ncol(train))
+  assertIntegerish(cl, len = nrow(train), any.missing = FALSE)
+  assertCount(k, positive = TRUE)
+
   ntr <- as.integer(dim(train)[1])
   nte <- as.integer(dim(test)[1])
   p <- as.integer(dim(train)[2])
+
+  if (k > ntr)
+    stop("k cannot exceed number of training observations")
+
   k <- as.integer(k)
-
-  if (length(cl) != ntr)
-    stop("train and class have different lengths")
-
-  if (dim(test)[2] != p)
-    stop("Dims of test and train differ")
 
   if (is.factor(cl)) {
     cl1 <- as.integer(as.numeric(cl))

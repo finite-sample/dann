@@ -6,10 +6,10 @@
 \usage{
 dann(
   x,
-  testx = matrix(nrow = 1, ncol = p),
+  testx = NULL,
   y,
   k = 5,
-  kmetric = max(50, 0.2 * n),
+  kmetric = NULL,
   epsilon = 1,
   fullw = FALSE,
   scalar = FALSE,

@@ -13,16 +13,20 @@
 #' }
 
 knncv <- function(x, y, k = 5) {
-  storage.mode(x) <- "double"
-  storage.mode(y) <- "integer"
   x <- as.matrix(x)
+  assertMatrix(x, mode = "numeric", any.missing = FALSE, min.rows = 2)
+  assertIntegerish(y, len = nrow(x), any.missing = FALSE)
+  assertCount(k, positive = TRUE)
+
   np <- dim(x)
   p <- np[2]
   n <- np[1]
-  
-  if (!is.loaded("knncv")) {
-    dyn.load(paste(.libPaths()[1], "/dann/libs/dann.so", sep = ""))
-  }
+
+  if (k > n)
+    stop("k cannot exceed number of observations")
+
+  storage.mode(x) <- "double"
+  storage.mode(y) <- "integer"
   
   junk <- .Fortran("knncv", as.integer(np[1]), as.integer(np[2]), x, y, predict = integer(n), error = integer(1), as.integer(k), as.single(runif(n)), double(n), PACKAGE = "dann")
   

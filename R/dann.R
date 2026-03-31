@@ -24,21 +24,49 @@
 #' epsilon = 1, fullw = FALSE, iter = 100,  covmin = 1e-04, cv = FALSE)
 #' }
 
-dann <- function(x, testx = matrix(nrow = 1, ncol = p), y, k = 5,
-                 kmetric = max(50, 0.2 * n), epsilon = 1, fullw = FALSE, scalar = FALSE, iter = 1,
+dann <- function(x, testx = NULL, y, k = 5,
+                 kmetric = NULL, epsilon = 1, fullw = FALSE, scalar = FALSE, iter = 1,
                  covmin = 1e-04, cv = FALSE) {
 
-  storage.mode(x)  <- "double"
-  storage.mode(testx) <- "double"
-  storage.mode(y)  <- "integer"
+  x <- as.matrix(x)
+  assertMatrix(x, mode = "numeric", any.missing = FALSE, min.rows = 2)
+  assertIntegerish(y, len = nrow(x), any.missing = FALSE)
+  assertCount(k, positive = TRUE)
+  assertNumeric(epsilon, lower = 0, any.missing = FALSE)
+  assertFlag(fullw)
+  assertFlag(scalar)
+  assertCount(iter, positive = TRUE)
+  assertNumber(covmin, lower = 0, finite = TRUE)
+  assertFlag(cv)
 
   np <- dim(x)
   p <- np[2]
   n <- np[1]
 
+  if (is.null(kmetric)) kmetric <- max(50, 0.2 * n)
+  assertCount(kmetric, positive = TRUE)
+
+  if (is.null(testx)) testx <- matrix(0, nrow = 1, ncol = p)
+  testx <- as.matrix(testx)
+  if (!cv) {
+    assertMatrix(testx, mode = "numeric", any.missing = FALSE, ncols = p)
+  } else {
+    assertMatrix(testx, mode = "numeric", ncols = p)
+  }
+
+  nclass <- as.integer(length(unique(y)))
+  if (nclass < 2L)
+    stop("y must have at least 2 classes")
+  if (k > n)
+    stop("k cannot exceed number of observations")
+  if (kmetric > n)
+    stop("kmetric cannot exceed number of observations")
+
+  storage.mode(x)  <- "double"
+  storage.mode(testx) <- "double"
+  storage.mode(y)  <- "integer"
   storage.mode(epsilon) <- "double"
   neps <- as.integer(length(epsilon))
-  nclass <- as.integer(length(table(y)))
 
   if (cv) {
     ntest <- as.integer(n)

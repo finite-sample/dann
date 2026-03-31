@@ -7,8 +7,8 @@
 nndist(
   x,
   y,
-  x0 = apply(x, 2, mean),
-  k = length(y)/2,
+  x0 = NULL,
+  k = NULL,
   epsilon = 1,
   fullw = FALSE,
   scalar = FALSE,

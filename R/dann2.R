@@ -17,21 +17,48 @@
 #' No. of fields remaining (given the money), and when the application credits expire. 
 #' @export
 
-dann2 <- function(x, testx = matrix(double(p), nrow = 1), y, k = 5, kmetric = length(y)/2, 
-                  epsilon = 1, rate = 0.5, fullw = FALSE, scalar = FALSE, iter = 1, 
+dann2 <- function(x, testx = NULL, y, k = 5, kmetric = NULL,
+                  epsilon = 1, rate = 0.5, fullw = FALSE, scalar = FALSE, iter = 1,
                   covmin = 1e-04, cv = FALSE) {
-  
-  storage.mode(x) <- "double"
-  storage.mode(testx) <- "double"
-  storage.mode(y) <- "integer"
-  nclass <- length(table(y))
-  storage.mode(epsilon) <- "double"
-  neps <- length(epsilon)
+
+  x <- as.matrix(x)
+  assertMatrix(x, mode = "numeric", any.missing = FALSE, min.rows = 2)
+  assertIntegerish(y, len = nrow(x), any.missing = FALSE)
+  assertCount(k, positive = TRUE)
+  assertNumeric(epsilon, lower = 0, any.missing = FALSE)
+  assertNumber(rate, lower = 0, upper = 1)
+  assertFlag(fullw)
+  assertFlag(scalar)
+  assertCount(iter, positive = TRUE)
+  assertNumber(covmin, lower = 0, finite = TRUE)
+  assertFlag(cv)
+
   np <- dim(x)
   p <- np[2]
   n <- np[1]
+
+  if (is.null(kmetric)) kmetric <- as.integer(n / 2)
+  assertCount(kmetric, positive = TRUE)
+
+  if (is.null(testx)) testx <- matrix(double(p), nrow = 1)
+  testx <- as.matrix(testx)
+  assertMatrix(testx, mode = "numeric", ncols = p)
+
+  nclass <- as.integer(length(unique(y)))
+  if (nclass < 2L)
+    stop("y must have at least 2 classes")
+  if (k > n)
+    stop("k cannot exceed number of observations")
+  if (kmetric > n)
+    stop("kmetric cannot exceed number of observations")
+
+  storage.mode(x) <- "double"
   storage.mode(testx) <- "double"
-  if (cv) 
+  storage.mode(y) <- "integer"
+  storage.mode(epsilon) <- "double"
+  neps <- length(epsilon)
+
+  if (cv)
     ntest <- n
   else ntest <- nrow(testx)
   

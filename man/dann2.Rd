@@ -6,10 +6,10 @@
 \usage{
 dann2(
   x,
-  testx = matrix(double(p), nrow = 1),
+  testx = NULL,
   y,
   k = 5,
-  kmetric = length(y)/2,
+  kmetric = NULL,
   epsilon = 1,
   rate = 0.5,
   fullw = FALSE,
