@@ -1,5 +1,9 @@
 # dann
 
+[![R-CMD-check](https://github.com/finite-sample/dann/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/finite-sample/dann/actions/workflows/R-CMD-check.yaml)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Trevor Hastie’s Original Fortran Implementation of Discriminant Adaptive
 Nearest Neighbors
 
