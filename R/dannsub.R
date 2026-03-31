@@ -21,11 +21,7 @@
 #' dannsub(km = max(50, 0.2 * n), k = 5, epsilon = 1, fullw = FALSE, scalex = TRUE, 
 #'    scalar = TRUE, dims = seq(p), iter.sub = 1, iter = 1, method = "knn", xnew, ynew)
 #' }
-
-To fix the code, I made several adjustments and improvements. Here's the corrected version of the dannsub function:
-
-R
-Copy code
+#' @export
 dannsub <- function(x, y, km = max(50, 0.2 * n), k = 5, epsilon = 1, fullw = FALSE, scalex = TRUE, scalar = TRUE, dims = seq(p), iter.sub = 1, iter = 1, method = "knn", xnew, ynew) {
   if (scalex) {
     mm <- apply(x, 2, mean)

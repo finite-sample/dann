@@ -4,7 +4,7 @@
 \alias{stand}
 \title{stand}
 \usage{
-stand(x = NA, xx = NA)
+stand(x, xx)
 }
 \arguments{
 \item{x}{matrix}
@@ -20,4 +20,3 @@ Standardize each column of both of the matrices with mean and standard deviation
 \examples{
 stand(matrix(1:6, ncol=3), matrix(1:6, ncol=3))
 }
-

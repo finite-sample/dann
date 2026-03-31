@@ -4,9 +4,19 @@
 \alias{dann}
 \title{dann}
 \usage{
-dann(x, testx = matrix(double(p), nrow = 1), y, k = 5, kmetric = max(50,
-  0.2 * n), epsilon = 1, fullw = FALSE, scalar = FALSE, iter = 1,
-  covmin = 1e-04, cv = FALSE)
+dann(
+  x,
+  testx = matrix(nrow = 1, ncol = p),
+  y,
+  k = 5,
+  kmetric = max(50, 0.2 * n),
+  epsilon = 1,
+  fullw = FALSE,
+  scalar = FALSE,
+  iter = 1,
+  covmin = 1e-04,
+  cv = FALSE
+)
 }
 \arguments{
 \item{x}{covariates matrix}
@@ -32,16 +42,14 @@ dann(x, testx = matrix(double(p), nrow = 1), y, k = 5, kmetric = max(50,
 \item{cv}{boolean reflecting whether to cross-validate or not}
 }
 \value{
-A list with items including Name of the Application, No. of pages remaining (given the money), 
-No. of fields remaining (given the money), and when the application credits expire.
+Predicted class labels
 }
 \description{
 Run Discriminant Adaptive Nearest Neighbors
 }
 \examples{
 \dontrun{
-dann(x <- matrix(rnorm(120,1,.2)), testx <- glass.test$x, y <- matrix(rnorm(120,1,.5)), 
+dann(x <- matrix(rnorm(120,1,.2)), testx <- glass.test$x, y <- matrix(rnorm(120,1,.5)),
 epsilon = 1, fullw = FALSE, iter = 100,  covmin = 1e-04, cv = FALSE)
 }
 }
-

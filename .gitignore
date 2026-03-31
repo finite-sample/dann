@@ -4,3 +4,8 @@
 dev
 src-i386
 src-x64
+src/*.o
+src/*.so
+src/*.dll
+/dann.Rcheck/00_pkg_src
+/dann.Rcheck

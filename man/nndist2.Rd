@@ -34,4 +34,3 @@ No. of fields remaining (given the money), and when the application credits expi
 \description{
 Main function
 }
-

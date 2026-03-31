@@ -4,7 +4,9 @@
 \name{glass.train}
 \alias{glass.train}
 \title{Training data for glass}
-\format{List of two elements: x - 89 x 9 training data matrix, y - vector of labels}
+\format{
+List of two elements: x - 89 x 9 training data matrix, y - vector of labels
+}
 \usage{
 glass.train
 }
@@ -12,4 +14,3 @@ glass.train
 Training data for glass
 }
 \keyword{data}
-

@@ -22,8 +22,7 @@ result
 K-nearest Neighbors
 }
 \examples{
-\dontrun{ 
-knn()
+\dontrun{
+knn(train, test, cl, k=2)
 }
 }
-

@@ -20,4 +20,3 @@ min2d
 min2d(matrix(rnorm(100,1,.2), ncol=5))
 }
 }
-

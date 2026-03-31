@@ -4,8 +4,16 @@
 \alias{mydann}
 \title{mydann}
 \usage{
-mydann(train.data, test.data, p = dim(x)[2], kmetric = max(50, 0.2 * n),
-  k = 5, epsilon.list = c(1, 0.5, 2, 5), iter.list = 1, ...)
+mydann(
+  train.data,
+  test.data,
+  p = dim(train.data$x)[2],
+  kmetric = max(50, 0.2 * length(train.data$y)),
+  k = 5,
+  epsilon.list = c(1, 0.5, 2, 5),
+  iter.list = 1,
+  ...
+)
 }
 \arguments{
 \item{train.data}{training data. All the features in matrix x. and class labels in y.}
@@ -33,4 +41,3 @@ mydann
 mydann()
 }
 }
-

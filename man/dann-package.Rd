@@ -7,7 +7,14 @@
 \description{
 Discriminant Adaptive Nearest Neighbors
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/soodoku/dann}
+  \item Report bugs at \url{https://github.com/soodoku/dann/issues}
+}
+
+}
 \author{
 Trevor Hastie
 }
-

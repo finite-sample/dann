@@ -4,7 +4,9 @@
 \name{sphdata.4}
 \alias{sphdata.4}
 \title{Sph Data}
-\format{List with two 500 x 11 matrices sph.tr and sph.te}
+\format{
+List with two 500 x 11 matrices sph.tr and sph.te
+}
 \usage{
 sphdata.4
 }
@@ -12,4 +14,3 @@ sphdata.4
 Sph Data
 }
 \keyword{data}
-

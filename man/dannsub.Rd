@@ -4,9 +4,22 @@
 \alias{dannsub}
 \title{dannsub}
 \usage{
-dannsub(x, y, km = max(50, 0.2 * n), k = 5, epsilon = 1, fullw = FALSE,
-  scalex = TRUE, scalar = TRUE, dims = seq(p), iter.sub = 1, iter = 1,
-  method = "knn", xnew, ynew)
+dannsub(
+  x,
+  y,
+  km = max(50, 0.2 * n),
+  k = 5,
+  epsilon = 1,
+  fullw = FALSE,
+  scalex = TRUE,
+  scalar = TRUE,
+  dims = seq(p),
+  iter.sub = 1,
+  iter = 1,
+  method = "knn",
+  xnew,
+  ynew
+)
 }
 \arguments{
 \item{x}{covariate matrix}
@@ -49,4 +62,3 @@ dannsub(km = max(50, 0.2 * n), k = 5, epsilon = 1, fullw = FALSE, scalex = TRUE,
    scalar = TRUE, dims = seq(p), iter.sub = 1, iter = 1, method = "knn", xnew, ynew)
 }
 }
-

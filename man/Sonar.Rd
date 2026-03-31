@@ -4,7 +4,9 @@
 \name{Sonar}
 \alias{Sonar}
 \title{Sonar data}
-\format{Data frame with 208 rows and 61 variables}
+\format{
+Data frame with 208 rows and 61 variables
+}
 \usage{
 Sonar
 }
@@ -12,4 +14,3 @@ Sonar
 Sonar data
 }
 \keyword{data}
-

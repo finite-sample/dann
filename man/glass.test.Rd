@@ -4,7 +4,9 @@
 \name{glass.test}
 \alias{glass.test}
 \title{Test data for glass}
-\format{List of two elements: x - 96 x 9 training data matrix, y - vector of labels}
+\format{
+List of two elements: x - 96 x 9 training data matrix, y - vector of labels
+}
 \usage{
 glass.test
 }
@@ -12,4 +14,3 @@ glass.test
 Test data for glass
 }
 \keyword{data}
-

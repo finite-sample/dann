@@ -4,8 +4,17 @@
 \alias{nndist}
 \title{nndist}
 \usage{
-nndist(x, y, x0 = apply(x, 2, mean), k = length(y)/2, epsilon = 1,
-  fullw = FALSE, scalar = FALSE, iter = 1, cv = 0)
+nndist(
+  x,
+  y,
+  x0 = apply(x, 2, mean),
+  k = length(y)/2,
+  epsilon = 1,
+  fullw = FALSE,
+  scalar = FALSE,
+  iter = 1,
+  cv = 0
+)
 }
 \arguments{
 \item{x}{matrix}
@@ -38,4 +47,3 @@ Main function
 nndist()
 }
 }
-

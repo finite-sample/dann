@@ -4,9 +4,20 @@
 \alias{dann2}
 \title{dann2}
 \usage{
-dann2(x, testx = matrix(double(p), nrow = 1), y, k = 5,
-  kmetric = length(y)/2, epsilon = 1, rate = 0.5, fullw = FALSE,
-  scalar = FALSE, iter = 1, covmin = 1e-04, cv = FALSE)
+dann2(
+  x,
+  testx = matrix(double(p), nrow = 1),
+  y,
+  k = 5,
+  kmetric = length(y)/2,
+  epsilon = 1,
+  rate = 0.5,
+  fullw = FALSE,
+  scalar = FALSE,
+  iter = 1,
+  covmin = 1e-04,
+  cv = FALSE
+)
 }
 \arguments{
 \item{x}{xmat}
@@ -40,4 +51,3 @@ No. of fields remaining (given the money), and when the application credits expi
 \description{
 dann2
 }
-

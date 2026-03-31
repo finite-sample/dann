@@ -24,4 +24,3 @@ Cross-validated k-means
 knncv(x, y, k=5)
 }
 }
-
