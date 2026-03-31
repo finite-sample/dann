@@ -1,11 +1,12 @@
 Package: dann
 Title: Discriminant Adaptive Nearest Neighbor Classification
 Version: 0.1.1
-Author: Trevor Hastie [aut], Gaurav Sood <gsood07@gmail.com> [cre]
-Maintainer: Gaurav Sood <gsood07@gmail.com>
-Description: Implements Discriminant Adaptive Nearest Neighbor classification,
-    a method that adapts the distance metric based on local discriminant
-    analysis to improve nearest neighbor classification.
+Authors@R: c(person("Trevor", "Hastie", role = "aut"), person("Gaurav", "Sood", email = "gsood07@gmail.com", role = c("ctb", "cre")))
+Description: Implements Discriminant Adaptive Nearest Neighbor classification
+    using Trevor Hastie's original Fortran implementation. DANN adapts the
+    distance metric based on local discriminant analysis to improve nearest
+    neighbor classification, particularly when classes have different
+    covariance structures or when irrelevant features are present.
 URL: https://github.com/soodoku/dann
 BugReports: https://github.com/soodoku/dann/issues
 Depends:
@@ -17,7 +18,10 @@ Imports:
     mda,
     checkmate
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 Config/testthat/edition: 3
 RoxygenNote: 7.3.3
 NeedsCompilation: yes

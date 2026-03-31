@@ -1,35 +1,54 @@
+---
+title: "DANN Examples"
+author: "Trevor Hastie"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DANN Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+```
+
 ## dann: Discriminant Adaptive Nearest Neighbors
 
 Implements the method discussed in [this paper](https://web.stanford.edu/~hastie/Papers/dann_IEEE.pdf).
 
 ### Load the package
 
-To get started, load the package. The latest version of the package will always be on GitHub. To install from GitHub:
-
-```{r, eval=FALSE, install}
-devtools::install_github("soodoku/dann")
+```{r load-package}
+library(dann)
+library(mda)
+data(dannt)
 ```
 
 ####  Generate some simulated data
 
-```{r, genex1}
-gen.ex1 <- 
+```{r genex1}
+gen.ex1 <-
 function(ntr=200, nte=1){
-	
+
 	x1 <- rnorm(ntr)
 	x2 <- cbind(x1, x1+1.0*rnorm(ntr))
 	x3 <- rnorm(ntr)
 	x4 <- cbind(x3+2, x3+1.0*rnorm(ntr))
 	x  <- rbind(x2,x4)
-	y  <- c(rep(1,ntr),rep(2,ntr))
-	
+	y  <- c(rep(1L,ntr),rep(2L,ntr))
+
 	x1 <- rnorm(nte)
 	x2 <- cbind(x1, x1+1.0*rnorm(nte))
 	x3 <- rnorm(nte)
 	x4 <- cbind(x3+2, x3+1.0*rnorm(nte))
 	xx <- rbind(x2,x4)
-	yy <- c(rep(1,nte),rep(2,nte))
-	
+	yy <- c(rep(1L,nte),rep(2L,nte))
+
 	return(list(x=x, y=y, xx=xx, yy=yy))
 }
 ```
@@ -68,29 +87,29 @@ function (fullw = FALSE, iter = 1)
 ## Gen ex2
 
 ```{r genex2}
-gen.ex2 <- 
+gen.ex2 <-
 function(ntr, nte, nextra=0, delta=1)
-{		
+{
 	sigma <- 1
 	rho <- .7
 	k <- sqrt( 1/rho^2 -1)
-	
+
 	x1 <- rnorm(ntr)
 	x2 <- cbind(x1, x1+k*rnorm(ntr))
 	x3 <- rnorm(ntr)
 	x4 <- cbind(x3+delta, x3+k*rnorm(ntr))
 	x <- rbind(x2,x4)
-	if(nextra>0) {x <- cbind(x,matrix(sigma*rnorm(nrow(x)*nextra),ncol=nextra) ) } 
-	y <- c(rep(1,ntr),rep(2,ntr))
-	
+	if(nextra>0) {x <- cbind(x,matrix(sigma*rnorm(nrow(x)*nextra),ncol=nextra) ) }
+	y <- c(rep(1L,ntr),rep(2L,ntr))
+
 	x1 <- rnorm(nte)
 	x2 <- cbind(x1, x1+k*rnorm(nte))
 	x3 <- rnorm(nte)
 	x4 <- cbind(x3+delta, x3+k*rnorm(nte))
 	xx <- rbind(x2,x4)
 	if(nextra>0){xx <- cbind(xx,matrix(sigma*rnorm(nrow(xx)*nextra),ncol=nextra) ) }
-	yy <- c(rep(1,nte),rep(2,nte))
-	
+	yy <- c(rep(1L,nte),rep(2L,nte))
+
 	return(list(x=x,y=y,xx=xx,yy=yy))
 }
 ```

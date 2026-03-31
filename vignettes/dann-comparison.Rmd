@@ -1,0 +1,195 @@
+---
+title: "Comparing kNN and DANN"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Comparing kNN and DANN}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+Discriminant Adaptive Nearest Neighbor (DANN) classification is an enhancement of standard k-nearest neighbors (kNN) that adapts the distance metric based on local class structure. This vignette demonstrates when and why DANN outperforms standard kNN.
+
+## The Key Idea
+
+Standard kNN uses Euclidean distance, treating all directions equally. This works well when classes are roughly spherical, but struggles when:
+
+1. **Classes have different covariance structures** - one class might be elongated in one direction, another in a different direction
+2. **Irrelevant features exist** - noise dimensions dilute the signal from informative features
+
+DANN addresses this by computing a local linear discriminant analysis around each query point, then modifying the distance metric to:
+
+- Stretch neighborhoods along class boundaries (where discrimination is difficult)
+- Shrink neighborhoods perpendicular to boundaries (where discrimination is easy)
+
+## Example 1: Different Covariance Structures
+
+Consider two classes where each is elongated, but in different directions:
+
+```{r covariance-example}
+library(dann)
+set.seed(42)
+
+n <- 150
+
+# Class 1: elongated horizontally (high variance in x, low in y)
+class1_x <- rnorm(n, mean = 0, sd = 2.0)
+class1_y <- rnorm(n, mean = 0, sd = 0.4)
+
+# Class 2: elongated vertically (low variance in x, high in y)
+class2_x <- rnorm(n, mean = 0, sd = 0.4)
+class2_y <- rnorm(n, mean = 0, sd = 2.0)
+
+# Combine
+x <- rbind(
+  cbind(class1_x, class1_y),
+  cbind(class2_x, class2_y)
+)
+y <- c(rep(1L, n), rep(2L, n))
+
+# Shuffle
+idx <- sample(2 * n)
+x <- x[idx, ]
+y <- y[idx]
+
+# Split train/test
+train_idx <- 1:240
+test_idx <- 241:300
+
+x_train <- x[train_idx, ]
+x_test <- x[test_idx, ]
+y_train <- y[train_idx]
+y_test <- y[test_idx]
+
+# Standardize
+std <- stand(x_train, x_test)
+
+# Compare methods
+knn_pred <- knn(std$x, std$xx, y_train, k = 5)
+dann_pred <- dann(std$x, std$xx, y_train, k = 5, kmetric = 40, fullw = TRUE)
+
+knn_acc <- mean(knn_pred == y_test)
+dann_acc <- mean(dann_pred == y_test)
+
+cat("5-NN accuracy: ", round(knn_acc * 100, 1), "%\n", sep = "")
+cat("DANN accuracy: ", round(dann_acc * 100, 1), "%\n", sep = "")
+```
+
+Both methods can handle this case reasonably well because the classes are geometrically distinguishable, but DANN's adaptive metric helps it find the optimal local decision boundary.
+
+## Example 2: Irrelevant Features
+
+A more challenging scenario is when only some features contain class information:
+
+```{r noise-example}
+set.seed(123)
+n <- 150
+
+# 2 informative features: classes separated
+x_informative <- rbind(
+  matrix(rnorm(n * 2, mean = 0, sd = 0.5), n, 2),
+  matrix(rnorm(n * 2, mean = 2, sd = 0.5), n, 2)
+)
+
+# 8 noise features: pure random, no class information
+x_noise <- matrix(rnorm(2 * n * 8, sd = 1), 2 * n, 8)
+
+x <- cbind(x_informative, x_noise)
+y <- c(rep(1L, n), rep(2L, n))
+
+# Shuffle and split
+idx <- sample(2 * n)
+x <- x[idx, ]
+y <- y[idx]
+
+train_idx <- 1:240
+test_idx <- 241:300
+
+# Standardize
+std <- stand(x[train_idx, ], x[test_idx, ])
+
+# Compare
+knn_pred <- knn(std$x, std$xx, y[train_idx], k = 5)
+dann_pred <- dann(std$x, std$xx, y[train_idx], k = 5, kmetric = 40, fullw = TRUE)
+
+knn_acc <- mean(knn_pred == y[test_idx])
+dann_acc <- mean(dann_pred == y[test_idx])
+
+cat("With 8 noise features:\n")
+cat("5-NN accuracy: ", round(knn_acc * 100, 1), "%\n", sep = "")
+cat("DANN accuracy: ", round(dann_acc * 100, 1), "%\n", sep = "")
+```
+
+DANN's local discriminant analysis helps it down-weight the noise dimensions.
+
+## Real Data: Glass Classification
+
+The package includes the glass identification dataset:
+
+```{r glass-example}
+data(dannt)
+
+# Standardize
+std <- stand(glass.train$x, glass.test$x)
+
+# Methods
+knn_pred <- knn(std$x, std$xx, glass.train$y, k = 5)
+dann_pred <- dann(std$x, std$xx, glass.train$y, k = 5, kmetric = 50)
+
+knn_errors <- sum(knn_pred != glass.test$y)
+dann_errors <- sum(dann_pred != glass.test$y)
+
+n_test <- length(glass.test$y)
+
+cat("Glass dataset (", n_test, " test samples, 6 classes):\n", sep = "")
+cat("5-NN errors: ", knn_errors, " (", round(100 * knn_errors / n_test, 1), "%)\n", sep = "")
+cat("DANN errors: ", dann_errors, " (", round(100 * dann_errors / n_test, 1), "%)\n", sep = "")
+```
+
+## Parameters
+
+### k and kmetric
+
+- `k`: Number of neighbors for the final classification vote (default: 5)
+- `kmetric`: Number of neighbors used to estimate the local covariance/metric (default: 50 or 20% of n)
+
+A larger `kmetric` gives a smoother metric estimate but may miss local structure.
+
+### epsilon
+
+The softening parameter controls how much the metric adapts:
+
+```{r epsilon-example}
+data(dannt)
+std <- stand(glass.train$x, glass.test$x)
+
+# Try different epsilon values
+epsilons <- c(0.1, 1, 10)
+results <- dann(std$x, std$xx, glass.train$y, k = 5, kmetric = 50, epsilon = epsilons)
+
+for (i in seq_along(epsilons)) {
+  errors <- sum(results[, i] != glass.test$y)
+  cat("epsilon =", epsilons[i], "-> errors:", errors, "\n")
+}
+```
+
+- Small epsilon: more adaptation (metric changes more based on local structure)
+- Large epsilon: less adaptation (closer to standard Euclidean metric)
+
+### fullw and scalar
+
+- `fullw = FALSE` (default): Use diagonal covariance (faster, often sufficient)
+- `fullw = TRUE`: Use full covariance matrix (captures correlations between features)
+- `scalar = TRUE`: Use scalar (isotropic) covariance (simplest, like weighted Euclidean)
+
+## References
+
+Hastie, T., & Tibshirani, R. (1996). Discriminant Adaptive Nearest Neighbor Classification. *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 18(6), 607-616.
