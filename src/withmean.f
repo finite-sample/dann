@@ -1,10 +1,10 @@
 C Output from Public domain Ratfor, version 1.01
-      subroutine withmean(n,p,class,x,y,k,weight,which, covw,fullw,scala
-     *r,singul,means, sumw,tmean)
+      subroutine withmean(n,p,class,x,y,k,weight,which,covw,fullw,
+     *scalar,singul,means,sumw,tmean)
       implicit double precision (a-h,o-z)
       integer n, p, class, k, which(k), y(n)
-      double precision x(n,p), weight(k), means(class,p), sumw(class), t
-     *mean(p), covw(p,p)
+      double precision x(n,p), weight(k), means(class,p), sumw(class),
+     *tmean(p), covw(p,p)
       logical singul,fullw,scalar
       do23000 ic=1,class
       do23002 ip=1,p

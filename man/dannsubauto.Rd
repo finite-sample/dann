@@ -32,9 +32,11 @@ dannsubauto(
 \item{plus}{1}
 
 \item{trace}{Boolean}
+
+\item{...}{Additional arguments passed to underlying functions}
 }
 \value{
-A list with items including Name of the Application, No. of pages remaining (given the money), 
+A list with items including Name of the Application, No. of pages remaining (given the money),
 No. of fields remaining (given the money), and when the application credits expire.
 }
 \description{

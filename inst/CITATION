@@ -1,15 +1,8 @@
-citHeader("To cite package 'dann' in publications use:")
-     
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
-vers <- paste("R package version", meta$Version)
- 
-citEntry(entry="Manual",
-		  title = "dann: Discriminant Adaptive Nearest Neighbor Classification",
-		  author = personList(as.person("Trevor Hastie")),
-		  year = year,
-		  note = vers,
-		  textVersion =
-		  paste("Trevor Hastie (",
-				year,
-				"). dann: Discriminant Adaptive Nearest Neighbor Classification.",
-				vers, ".", sep=""))
+bibentry(
+  bibtype = "Manual",
+  title = "dann: Discriminant Adaptive Nearest Neighbor Classification",
+  author = c(person("Trevor", "Hastie")),
+  year = sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE),
+  note = paste("R package version", meta$Version),
+  url = "https://github.com/finite-sample/dann"
+)

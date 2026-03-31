@@ -1,13 +1,14 @@
 #' mydann
 #'
-#' @param train.data training data. All the features in matrix x. and class labels in y. 
+#' @param train.data training data. All the features in matrix x. and class labels in y.
 #' @param test.data  test data. Same format as the test data
 #' @param p dimensions of x
 #' @param kmetric k met
 #' @param k Number of nearest neighbors
 #' @param epsilon.list epsilon
 #' @param iter.list iteration
-#' 
+#' @param ... Additional arguments passed to dann2
+#'
 #' @return  results
 #' @examples \dontrun{ 
 #' mydann()

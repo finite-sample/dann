@@ -29,6 +29,8 @@ mydann(
 \item{epsilon.list}{epsilon}
 
 \item{iter.list}{iteration}
+
+\item{...}{Additional arguments passed to dann2}
 }
 \value{
 results

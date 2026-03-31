@@ -8,9 +8,10 @@
 #' @param kmetric kmet
 #' @param epsilon epsilon
 #' @param trace Boolean
+#' @param ... Additional arguments passed to underlying functions
 #'
-#' @return A list with items including Name of the Application, No. of pages remaining (given the money), 
-#' No. of fields remaining (given the money), and when the application credits expire. 
+#' @return A list with items including Name of the Application, No. of pages remaining (given the money),
+#' No. of fields remaining (given the money), and when the application credits expire.
 #' @export
 
 dannsubauto <-

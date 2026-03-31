@@ -1,14 +1,14 @@
 Package: dann
 Title: Discriminant Adaptive Nearest Neighbor Classification
-Version: 0.1.1
+Version: 1.0.3
 Authors@R: c(person("Trevor", "Hastie", role = "aut"), person("Gaurav", "Sood", email = "gsood07@gmail.com", role = c("ctb", "cre")))
 Description: Implements Discriminant Adaptive Nearest Neighbor classification
     using Trevor Hastie's original Fortran implementation. DANN adapts the
     distance metric based on local discriminant analysis to improve nearest
     neighbor classification, particularly when classes have different
     covariance structures or when irrelevant features are present.
-URL: https://github.com/soodoku/dann, https://soodoku.github.io/dann/
-BugReports: https://github.com/soodoku/dann/issues
+URL: https://github.com/finite-sample/dann, https://finite-sample.github.io/dann/
+BugReports: https://github.com/finite-sample/dann/issues
 Config/Needs/website: pkgdown
 Depends:
     R (>= 3.2.0)

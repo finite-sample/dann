@@ -3,18 +3,26 @@
 \docType{package}
 \name{dann-package}
 \alias{dann-package}
-\title{dann: Discriminant Adaptive Nearest Neighbors}
+\title{dann: Discriminant Adaptive Nearest Neighbor Classification}
 \description{
-Discriminant Adaptive Nearest Neighbors
+Implements Discriminant Adaptive Nearest Neighbor classification using Trevor Hastie's original Fortran implementation. DANN adapts the distance metric based on local discriminant analysis to improve nearest neighbor classification, particularly when classes have different covariance structures or when irrelevant features are present.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/soodoku/dann}
-  \item Report bugs at \url{https://github.com/soodoku/dann/issues}
+  \item \url{https://github.com/finite-sample/dann}
+  \item \url{https://finite-sample.github.io/dann/}
+  \item Report bugs at \url{https://github.com/finite-sample/dann/issues}
 }
 
 }
 \author{
-Trevor Hastie
+\strong{Maintainer}: Gaurav Sood \email{gsood07@gmail.com} [contributor]
+
+Authors:
+\itemize{
+  \item Trevor Hastie
 }
+
+}
+\keyword{internal}

@@ -12,6 +12,7 @@ C Output from Public domain Ratfor, version 1.01
       integer niter,k
       logical fullsc(2),fullw,singul,scalar
       double precision covmin
+      scalar=.false.
       kmetric=kkk(1)
       ktarget=kkk(2)
       iter=kkk(3)
