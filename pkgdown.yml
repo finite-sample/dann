@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   dann-comparison: dann-comparison.html
   dannex: dannex.html
-last_built: 2026-03-31T06:21Z
+last_built: 2026-03-31T06:27Z
 urls:
   reference: https://finite-sample.github.io/dann/reference
   article: https://finite-sample.github.io/dann/articles
