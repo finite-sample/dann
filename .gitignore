@@ -12,3 +12,5 @@ src/*.dll
 dann_0.1.1.tar.gz
 /doc/
 /Meta/
+/docs/
+/..Rcheck

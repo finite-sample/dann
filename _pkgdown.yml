@@ -1,0 +1,47 @@
+url: https://soodoku.github.io/dann/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+
+home:
+  title: "dann - Trevor Hastie's Original DANN"
+
+reference:
+  - title: "Classification"
+    desc: "Main classification functions"
+    contents:
+      - dann
+      - dann2
+      - knn
+      - knncv
+  - title: "Subspace Methods"
+    desc: "Subspace-based DANN variants"
+    contents:
+      - dannsub
+      - dannsubauto
+      - nnsubspace
+      - nnsubmeans
+  - title: "Utilities"
+    desc: "Helper functions"
+    contents:
+      - stand
+      - nndist
+      - nndist2
+      - mydann
+  - title: "Datasets"
+    desc: "Example datasets"
+    contents:
+      - Sonar
+      - Vowel
+      - glass.test
+      - glass.train
+      - min2d
+      - sphdata.4
+  - title: "Package"
+    contents:
+      - dann-package

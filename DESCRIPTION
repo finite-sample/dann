@@ -7,8 +7,9 @@ Description: Implements Discriminant Adaptive Nearest Neighbor classification
     distance metric based on local discriminant analysis to improve nearest
     neighbor classification, particularly when classes have different
     covariance structures or when irrelevant features are present.
-URL: https://github.com/soodoku/dann
+URL: https://github.com/soodoku/dann, https://soodoku.github.io/dann/
 BugReports: https://github.com/soodoku/dann/issues
+Config/Needs/website: pkgdown
 Depends:
     R (>= 3.2.0)
 License: MIT + file LICENSE
