@@ -31,6 +31,7 @@ Consider two classes where each is elongated, but in different
 directions:
 
 ``` r
+
 library(dann)
 set.seed(42)
 
@@ -91,6 +92,7 @@ A more challenging scenario is when only some features contain class
 information:
 
 ``` r
+
 set.seed(123)
 n <- 150
 
@@ -140,6 +142,7 @@ dimensions.
 The package includes the glass identification dataset:
 
 ``` r
+
 data(dannt)
 
 # Standardize
@@ -179,6 +182,7 @@ structure.
 The softening parameter controls how much the metric adapts:
 
 ``` r
+
 data(dannt)
 std <- stand(glass.train$x, glass.test$x)
 

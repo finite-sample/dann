@@ -34,6 +34,7 @@ uses Hastie’s original code.
 ## Installation
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("soodoku/dann")
 ```
@@ -41,6 +42,7 @@ devtools::install_github("soodoku/dann")
 ## Quick Example
 
 ``` r
+
 library(dann)
 
 # Load included glass dataset

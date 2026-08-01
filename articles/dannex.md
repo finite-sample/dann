@@ -8,6 +8,7 @@ paper](https://web.stanford.edu/~hastie/Papers/dann_IEEE.pdf).
 #### Load the package
 
 ``` r
+
 library(dann)
 library(mda)
 #> Loading required package: class
@@ -23,6 +24,7 @@ data(dannt)
 ##### Generate some simulated data
 
 ``` r
+
 gen.ex1 <-
 function(ntr=200, nte=1){
 
@@ -45,6 +47,7 @@ function(ntr=200, nte=1){
 ```
 
 ``` r
+
 ex1 <-
 function (fullw = FALSE, iter = 1) 
 {
@@ -79,6 +82,7 @@ function (fullw = FALSE, iter = 1)
 ### Gen ex2
 
 ``` r
+
 gen.ex2 <-
 function(ntr, nte, nextra=0, delta=1)
 {
@@ -107,6 +111,7 @@ function(ntr, nte, nextra=0, delta=1)
 ```
 
 ``` r
+
 
 ex2 <-
 function (fullw = FALSE, covmin = 1e-04, iter = 1) 
@@ -145,6 +150,7 @@ function (fullw = FALSE, covmin = 1e-04, iter = 1)
 ## Glass Data Example
 
 ``` r
+
 glass <-
 function (fullw = FALSE, iter = 1, kmet = 50) 
 {
@@ -173,6 +179,7 @@ function (fullw = FALSE, iter = 1, kmet = 50)
 
 ``` r
 
+
 sonar <-
 function (fullw = FALSE, scalar = FALSE, iter = 1) 
 {
@@ -195,6 +202,7 @@ function (fullw = FALSE, scalar = FALSE, iter = 1)
 ### Vowel
 
 ``` r
+
 
 vowel <-
 function (fullw = FALSE, iter = 1) 
@@ -233,6 +241,7 @@ function (fullw = FALSE, iter = 1)
 ### Sph
 
 ``` r
+
 
 sph <-
 function (fullw = FALSE, iter = 1) 

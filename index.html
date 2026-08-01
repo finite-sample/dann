@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>dann - Trevor Hastie's Original DANN • dann</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="dann - Trevor Hastie's Original DANN">
 <meta name="description" content="Implements Discriminant Adaptive Nearest Neighbor classification using Trevor Hastie's original Fortran implementation. DANN adapts the distance metric based on local discriminant analysis to improve nearest neighbor classification, particularly when classes have different covariance structures or when irrelevant features are present.">
@@ -108,33 +108,33 @@
 <h2 id="key-parameters">Key Parameters<a class="anchor" aria-label="anchor" href="#key-parameters"></a>
 </h2>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>Parameter</th>
 <th>Description</th>
 <th>Default</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code>k</code></td>
 <td>Number of neighbors for final classification</td>
 <td>5</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>kmetric</code></td>
 <td>Number of neighbors for computing the local metric</td>
 <td>50</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>epsilon</code></td>
 <td>Softening parameter (larger = more regularization)</td>
 <td>1</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code>fullw</code></td>
 <td>Use full (non-diagonal) covariance matrix</td>
 <td>FALSE</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code>scalar</code></td>
 <td>Use scalar (isotropic) covariance</td>
 <td>FALSE</td>
@@ -208,7 +208,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
