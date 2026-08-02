@@ -33,15 +33,20 @@ nndist2 <- function(x, y, x0 = colMeans(x), kmetric = length(y)/2, ktarget = 5, 
   np <- dim(x)
   p <- np[2]
   n <- np[1]
+  # `dist` is handed to withmean as its tmean(p) scratch before being filled
+  # with the n per-observation distances, so it must hold max(n, p) doubles.
+  # Allocating double(n) aborted R whenever p > n.
   junk <- .Fortran("nndist2", as.integer(n), as.integer(p), as.integer(nclass),
                    k = as.integer(c(kmetric, ktarget, iter)),
                    rem = as.double(c(rate, epsilon, 1e-04)),
                    x, x0, as.integer(cv), y, c(fullw, scalar),
-                   which = integer(n), dist = double(n),
+                   which = integer(n), dist = double(max(n, p)),
                    metric = double(p^2), covw = double(p^2),
                    means = double(nclass * p), weight = double(n),
                    values = double(p), vectors = double(p * p),
                    double(p * p), double(n + 2 * p), x,
                    ynew = y, kback = integer(2), PACKAGE = "dann")
+  # Trim the tmean(p) scratch overhang back to the n distances.
+  junk$dist <- junk$dist[seq_len(n)]
   return(junk)
 }

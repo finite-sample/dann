@@ -55,7 +55,12 @@ nndist <- function(x, y, x0 = NULL, k = NULL, epsilon = 1, fullw = FALSE, scalar
   y <- as.integer(factor(y, levels = sort(unique(y))))
   storage.mode(y) <- "integer"
   
-  junk <- .Fortran("nndist", as.integer(np[1]), as.integer(np[2]), as.integer(nclass), as.integer(k), x, x0, as.integer(cv), y, as.integer(iter), fullw, scalar, epsilon = as.double(epsilon), which = integer(n), dist = double(n), covw = matrix(double(p^2), p, p), covmin = as.double(1e-04), means = matrix(double(nclass * p), nclass, p), weight = double(n), values = double(p), vectors = double(p * p), double(p * p), double(n + 2 * p), PACKAGE = "dann")
+  # `dist` is handed to withmean as its tmean(p) scratch before being filled
+  # with the n per-observation distances, so it must hold max(n, p) doubles.
+  # Allocating double(n) aborted R whenever p > n.
+  junk <- .Fortran("nndist", as.integer(np[1]), as.integer(np[2]), as.integer(nclass), as.integer(k), x, x0, as.integer(cv), y, as.integer(iter), fullw, scalar, epsilon = as.double(epsilon), which = integer(n), dist = double(max(n, p)), covw = matrix(double(p^2), p, p), covmin = as.double(1e-04), means = matrix(double(nclass * p), nclass, p), weight = double(n), values = double(p), vectors = double(p * p), double(p * p), double(n + 2 * p), PACKAGE = "dann")
   
+  # Trim the tmean(p) scratch overhang back to the n distances.
+  junk$dist <- junk$dist[seq_len(n)]
   return(junk)
 }

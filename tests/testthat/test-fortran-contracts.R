@@ -78,3 +78,24 @@ test_that("dann's own default kmetric passes its own assertion", {
     expect_no_error(dann(x, x[1:2, ], y, k = 5))
   }
 })
+
+test_that("more columns than rows does not abort R", {
+  # `dist` is handed to withmean/withmean2 as their tmean(p) scratch before
+  # being filled with the n per-observation distances. It was allocated
+  # double(n), so p > n wrote past the end and aborted R outright.
+  set.seed(9)
+  x <- matrix(rnorm(15), 3, 5)
+  y <- c(1L, 1L, 2L)
+
+  got <- nndist(x, y, matrix(colMeans(x), 1), k = 2)
+  expect_length(got$dist, 3L)
+  expect_true(all(is.finite(got$dist)))
+
+  got2 <- nndist2(x, y, kmetric = 2, ktarget = 1)
+  expect_length(got2$dist, 3L)
+
+  # The ordinary p < n case is unaffected.
+  xw <- matrix(rnorm(200), 50, 4)
+  yw <- rep(1:2, 25)
+  expect_length(nndist(xw, yw, matrix(colMeans(xw), 1), k = 20)$dist, 50L)
+})
