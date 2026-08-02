@@ -1,8 +1,14 @@
 C Output from Public domain Ratfor, version 1.01
-      subroutine withmean2(n,p,class,x,y,k,weight,which,covw,fullw,
+C  nndist2 materialises the k selected neighbours into xnew/ynew before
+C  calling, so rows 1..k are already the ones wanted and are indexed
+C  directly. This routine used to declare a `which` mapping in position 8
+C  that nndist2 never passed, shifting every later argument by one: the
+C  double array covw was reinterpreted as integer subscripts and tmean
+C  received no argument at all, which crashed R.
+      subroutine withmean2(n,p,class,x,y,k,weight,covw,fullw,
      *scalar,singul,means,sumw,tmean)
       implicit double precision (a-h,o-z)
-      integer n, p, class, k, which(k), y(n)
+      integer n, p, class, k, y(n)
       double precision x(n,p), weight(k), means(class,p), sumw(class),
      *tmean(p), covw(p,p)
       logical singul,fullw,scalar
@@ -15,7 +21,7 @@ C Output from Public domain Ratfor, version 1.01
 23000 continue
 23001 continue
       do23004 i=1,k
-      ii=which(i)
+      ii=i
       ic=y(ii)
       sumw(ic)=sumw(ic)+weight(i)
       do23006 ip=1,p
@@ -60,7 +66,7 @@ C Output from Public domain Ratfor, version 1.01
       do23028 ip2=1,p
       covw(ip1,ip2)=0d0
       do23030 i=1,k
-      ii=which(i)
+      ii=i
       covw(ip1,ip2) =covw(ip1,ip2) +weight(i)*(x(ii,ip1)-means(y(ii),ip1
      *))*(x(ii,ip2)-means(y(ii),ip2))/tsumw
 23030 continue
@@ -74,7 +80,7 @@ C Output from Public domain Ratfor, version 1.01
       ip2=ip1
       covw(ip1,ip2)=0d0
       do23034 i=1,k
-      ii=which(i)
+      ii=i
       covw(ip1,ip2) =covw(ip1,ip2) +weight(i)*(x(ii,ip1)-means(y(ii),ip1
      *))*(x(ii,ip2)-means(y(ii),ip2))/tsumw
 23034 continue

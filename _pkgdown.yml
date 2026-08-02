@@ -16,7 +16,6 @@ reference:
     desc: "Main classification functions"
     contents:
       - dann
-      - dann2
       - knn
       - knncv
   - title: "Subspace Methods"
@@ -32,7 +31,6 @@ reference:
       - stand
       - nndist
       - nndist2
-      - mydann
   - title: "Datasets"
     desc: "Example datasets"
     contents:

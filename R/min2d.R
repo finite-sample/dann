@@ -9,9 +9,12 @@
 min2d <-
 function (mat=NULL) 
 {
-    i <-  order(mat)[1] # index for the smallest value in the matrix
+    i <- order(mat)[1]  # linear index of the smallest value, 1-based
     dd <- dim(mat)      # dims of the matrix
-    i1 <- trunc(i/dd[1]) + 1 # should always be 1 unless it is a matrix with 1 row and then it would be 2
-    i2 <- i %% dd[1]    #  
-    c(i2, i1)           # 
+    # Linear indices are 1-based, so shift to 0-based before dividing and back
+    # after. Dividing i directly returned row 0 whenever the minimum fell in the
+    # last row, and put the column one too far right.
+    i1 <- ((i - 1) %/% dd[1]) + 1  # column
+    i2 <- ((i - 1) %% dd[1]) + 1   # row
+    c(i2, i1)
 }

@@ -43,7 +43,10 @@ dann <- function(x, testx = NULL, y, k = 5,
   p <- np[2]
   n <- np[1]
 
-  if (is.null(kmetric)) kmetric <- max(50, 0.2 * n)
+  # Rounded, because assertCount() below rejects a non-integer double and
+  # 0.2 * n is one for every n that is not a multiple of 5 -- so this default
+  # failed its own assertion for most n > 250.
+  if (is.null(kmetric)) kmetric <- max(50L, as.integer(round(0.2 * n)))
   assertCount(kmetric, positive = TRUE)
 
   if (is.null(testx)) testx <- matrix(0, nrow = 1, ncol = p)
@@ -61,6 +64,15 @@ dann <- function(x, testx = NULL, y, k = 5,
     stop("k cannot exceed number of observations")
   if (kmetric > n)
     stop("kmetric cannot exceed number of observations")
+
+  # Class labels index Fortran arrays directly -- means(class,p) and sumw(class)
+  # in withmean.f -- so they must be 1..nclass with no gaps. Nothing enforced
+  # that, and nclass is only length(unique(y)), so labels like {1,3} or {5,9}
+  # ran out of bounds: with {1,3} the between-class matrix B came back
+  # identically zero, silently reducing DANN to Mahalanobis k-NN. Map to codes
+  # for the call and back to the caller's own labels on the way out.
+  ylev <- sort(unique(y))
+  y <- as.integer(factor(y, levels = ylev))
 
   storage.mode(x)  <- "double"
   storage.mode(testx) <- "double"
@@ -86,5 +98,11 @@ dann <- function(x, testx = NULL, y, k = 5,
            as.double(covmin), matrix(double(nclass * p), nrow = nclass, ncol = p),
            double(n), as.single(runif(ntest)),
            double(n + 2 * p^2 + 3 * p), PACKAGE = "dann")
-  out$pred
+
+  code <- out$pred
+  code[code < 1L | code > length(ylev)] <- NA_integer_
+  pred <- ylev[code]
+  dim(pred) <- dim(out$pred)
+  dimnames(pred) <- dimnames(out$pred)
+  pred
 }
