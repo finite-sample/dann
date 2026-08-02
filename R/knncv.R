@@ -28,12 +28,16 @@ knncv <- function(x, y, k = 5) {
   storage.mode(x) <- "double"
   # Labels index Fortran arrays directly (means(class,p), sumw(class)), so
   # they must be 1..nclass with no gaps; gapped labels ran out of bounds.
-  y <- as.integer(factor(y, levels = sort(unique(y))))
+  ylev <- sort(unique(y))
+  y <- as.integer(factor(y, levels = ylev))
   storage.mode(y) <- "integer"
   
   junk <- .Fortran("knncv", as.integer(np[1]), as.integer(np[2]), x, y, predict = integer(n), error = integer(1), as.integer(k), as.single(runif(n)), double(n), PACKAGE = "dann")
   
-  res <- junk$predict
+  # Back to the caller's own labels: knncv.f predicts in the coded space.
+  code <- junk$predict
+  code[code < 1L | code > length(ylev)] <- NA_integer_
+  res <- ylev[code]
   attr(res, "error") <- junk$error
   
   res

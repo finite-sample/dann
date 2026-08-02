@@ -70,3 +70,29 @@ test_that("knn agrees with class::knn regardless of label coding", {
     expect_equal(as.character(got), as.character(ref))
   }
 })
+
+## Found by an independent review of this branch, not by the suite: the first
+## pass at the label fix remapped labels for knncv() but never mapped the
+## predictions back, so knncv() answered in internal codes; and it missed
+## nnsubmeans() and nnsubspace() entirely, leaving the out-of-bounds path live
+## in two exported functions.
+
+test_that("knncv answers in the caller's labels", {
+  x <- matrix(c(0, 1, 10, 11), 4, 1)
+  got <- knncv(x, c(5L, 5L, 9L, 9L), k = 1)
+  expect_true(all(as.vector(got) %in% c(5L, 9L)))
+})
+
+test_that("nnsubspace and nnsubmeans do not depend on the label coding", {
+  set.seed(1)
+  x <- matrix(rnorm(100), 50, 2)
+  y <- rep(c(1L, 3L), 25)
+  dense <- as.integer(factor(y))
+
+  for (fn in c("nnsubspace", "nnsubmeans")) {
+    f <- get(fn, envir = asNamespace("dann"))
+    invisible(capture.output(gapped <- f(x, y, k = 10)))
+    invisible(capture.output(packed <- f(x, dense, k = 10)))
+    expect_equal(gapped, packed, info = fn)
+  }
+})
