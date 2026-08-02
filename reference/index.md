@@ -6,8 +6,6 @@ Main classification functions
 
 - [`dann()`](https://finite-sample.github.io/dann/reference/dann.md) :
   dann
-- [`dann2()`](https://finite-sample.github.io/dann/reference/dann2.md) :
-  dann2
 - [`knn()`](https://finite-sample.github.io/dann/reference/knn.md) : knn
 - [`knncv()`](https://finite-sample.github.io/dann/reference/knncv.md) :
   knncv
@@ -35,8 +33,6 @@ Helper functions
   : nndist
 - [`nndist2`](https://finite-sample.github.io/dann/reference/nndist2.md)
   : nndist2
-- [`mydann()`](https://finite-sample.github.io/dann/reference/mydann.md)
-  : mydann
 
 ## Datasets
 
