@@ -26,6 +26,9 @@ knncv <- function(x, y, k = 5) {
     stop("k cannot exceed number of observations")
 
   storage.mode(x) <- "double"
+  # Labels index Fortran arrays directly (means(class,p), sumw(class)), so
+  # they must be 1..nclass with no gaps; gapped labels ran out of bounds.
+  y <- as.integer(factor(y, levels = sort(unique(y))))
   storage.mode(y) <- "integer"
   
   junk <- .Fortran("knncv", as.integer(np[1]), as.integer(np[2]), x, y, predict = integer(n), error = integer(1), as.integer(k), as.single(runif(n)), double(n), PACKAGE = "dann")

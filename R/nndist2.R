@@ -25,6 +25,9 @@
 nndist2 <- function(x, y, x0 = colMeans(x), kmetric = length(y)/2, ktarget = 5, rate = 0.5, epsilon = 1, fullw = FALSE, scalar = FALSE, iter = 1, cv = 0) {
   storage.mode(x) <- "double"
   storage.mode(x0) <- "double"
+  # Labels index Fortran arrays directly (means(class,p), sumw(class)), so
+  # they must be 1..nclass with no gaps; gapped labels ran out of bounds.
+  y <- as.integer(factor(y, levels = sort(unique(y))))
   storage.mode(y) <- "integer"
   nclass <- length(table(y))
   np <- dim(x)

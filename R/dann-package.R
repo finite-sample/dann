@@ -1,6 +1,6 @@
 #' @importFrom mda fda mda
 #' @importFrom stats runif var
-#' @importFrom checkmate assertMatrix assertIntegerish assertCount assertNumeric assertFlag assertNumber
+#' @importFrom checkmate assertMatrix assertIntegerish assertCount assertNumeric assertFlag assertNumber assertVector
 #' @useDynLib dann
 #' @keywords internal
 "_PACKAGE"
