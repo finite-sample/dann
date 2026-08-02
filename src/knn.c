@@ -11,6 +11,7 @@
 */
 
 #include "f2c.h"
+#include <R.h>   /* R_alloc */
 
 /* Subroutine */ int knn1_(integer *ntr, integer *nte, integer *p, doublereal 
 	*train, integer *class__, doublereal *test, integer *res, doublereal *
@@ -142,10 +143,15 @@
     doublereal d__1;
 
     /* Local variables */
-    static integer j, k, l, k1, mm, pos[50], ntie, npat;
+    static integer j, k, l, k1, mm, ntie, npat;
     static doublereal dist;
-    static integer votes[51];
-    static real nndist[100];
+    /* These were fixed-size stack arrays -- pos[50], votes[51], nndist[100] --
+       while k was validated only against the number of training rows and the
+       class codes only by convention. k > 50 wrote past pos, giving wrong
+       neighbours for k >= 101 and a crash from k = 128. Sized from the actual
+       arguments instead. R_alloc memory is released when knn_ returns to R. */
+    integer *pos, *votes, nclass;
+    real *nndist;
 
     /* Parameter adjustments */
     --u;
@@ -160,6 +166,19 @@
     train -= train_offset;
 
     /* Function Body */
+    nclass = 0;
+    for (j = 1; j <= *ntr; ++j) {
+	if (class__[j] > nclass) {
+	    nclass = class__[j];
+	}
+    }
+    if (nclass < 1) {
+	nclass = 1;
+    }
+    pos = (integer *) R_alloc((size_t) *kn, sizeof(integer));
+    nndist = (real *) R_alloc((size_t) *kn, sizeof(real));
+    votes = (integer *) R_alloc((size_t) (nclass + 1), sizeof(integer));
+
     i__1 = *nte;
     for (npat = 1; npat <= i__1; ++npat) {
 	i__2 = *ntr;
@@ -213,7 +232,7 @@
 L50:
 	    ;
 	}
-	for (j = 0; j <= 50; ++j) {
+	for (j = 0; j <= nclass; ++j) {
 /* L60: */
 	    votes[j] = 0;
 	}
@@ -225,7 +244,7 @@ L50:
 	}
 	mm = votes[0];
 	l = 0;
-	for (j = 1; j <= 50; ++j) {
+	for (j = 1; j <= nclass; ++j) {
 	    if (votes[j] > mm) {
 		mm = votes[j];
 		l = j;
