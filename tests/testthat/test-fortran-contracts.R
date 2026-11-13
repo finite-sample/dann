@@ -25,7 +25,7 @@ test_that("nndist2 returns, and computes the metric nndist computes", {
 test_that("knn is correct for k past the old fixed buffer sizes", {
   skip_if_not_installed("class")
   # pos[50] and nndist[100] were fixed-size while k was checked only against
-  # the row count: k >= 101 returned wrong neighbours and a label of 0, and
+  # the row count: k >= 101 returned wrong neighbors and a label of 0, and
   # k = 128 aborted R.
   set.seed(7); n <- 150
   x <- rbind(matrix(rnorm(n * 2, 0, 1), n, 2), matrix(rnorm(n * 2, 4, 1), n, 2))
